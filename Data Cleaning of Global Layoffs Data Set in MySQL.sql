@@ -133,14 +133,14 @@ where location like 'MalmÃ¶';
 
 #INDUSTRY
 #Issue: Null Values. 'Crypto', 'Crypto Currency' & 'CryptoCurrency' all fall in the same industry, Crypto.
-#Solution: Use WHERE Sttement with is null.Use WHERE Statement with LIKE and wildcard '%'
+#Solution: Use WHERE Statement with LIKE and wildcard '%'
 select distinct industry
 from global_layoffs.layoffs3
 order by industry asc;
 
--- update global_layoffs.layoffs3
--- set industry = ''
--- where industry is null;
+update global_layoffs.layoffs3
+set industry = null
+where industry = '';
 
 update global_layoffs.layoffs3
 set industry = 'Crypto'
@@ -175,6 +175,7 @@ where country like 'United States%';
 select * from global_layoffs.layoffs3
 where company = 'Airbnb';
 #The other 'Airbnb' result has 'Travel' value missing under industry column on its row
+
 #A solution to populate the missing value is using self join  
 select t1.industry, t2.industry
 from global_layoffs.layoffs3 as t1
@@ -223,10 +224,7 @@ where total_laid_off is null
 select total_laid_off, percentage_laid_off
 from global_layoffs.layoffs3;
   
-
 #row_num is no longer needed. Delete it
-select * from global_layoffs.layoffs3;
-
 alter table global_layoffs.layoffs3
 drop column row_num;
 
